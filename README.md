@@ -5,9 +5,9 @@ On ubuntu
 ```
 sudo su
 apt-get install python python-dev libffi-dev python-pip python-virtualenv
-git clone git@github.com:wotashu/Gamer-Flask.git
-cd Gamer-Flask
-virtualenv venv
+git clone git@github.com:wotashu/game-graph.git
+cd game-graph
+virtualenv env
 source venv/bin/activate
 pip install -r requirements.txt
 python run.py
