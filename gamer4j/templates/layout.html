@@ -1,0 +1,49 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/html">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Gamer Metadata Database</title>
+    <!-- Bootstrap -->
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/jumbotron.css') }}" rel="stylesheet" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<div class=page>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+            <a class="navbar-brand" href="{{ url_for('index') }}">Game Graph</a>
+            <a class="navbar-brand" href="/all_games">All Games</a>
+            {% if not session.username %}
+                <a class="navbar-brand" href="{{ url_for('register') }}">Register</a>
+                <a class="navbar-brand" href="{{ url_for('login') }}">Login</a>
+            {% else %}
+                <a class="navbar-brand" href="{{ url_for('profile', profile_username=session.username) }}">Profile</a>
+                <a class="navbar-brand" href="{{ url_for('logout') }}">Logout</a>
+        {% endif %}
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+
+    {% for message in get_flashed_messages() %}
+        <div class=flash>{{ message }}</div>
+    {% endfor %}
+    {% block body %}{% endblock %}
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script type=javascript href="{{ url_for('static', filename='js/jquery-2.1.4.min.js') }}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script type=javascript href="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+</html>
