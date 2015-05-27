@@ -47,7 +47,7 @@ class User:
         else:
             return False
 
-    def add_game(self, title, tags, genre):
+    def add_game(self, title, tags, genre, platform):
         user = self.find()
         game = Node(
             "Game",
@@ -74,6 +74,21 @@ class User:
             rel = Relationship(game, "HAS_GENRE", gen,
                                time=timestamp(), date=date())
             graph.create(rel)
+
+        platform = [x.strip() for x in platform.lower().split(',')]
+        for g in genre:
+            gen = graph.merge_one("Platform", "name", g)
+            rel = Relationship(game, "HAS_PLATFORM", gen,
+                               time=timestamp(), date=date())
+            graph.create(rel)
+
+
+    def form(title, date):
+        chunk = Node(
+                title = title
+                date=date()
+                )
+
 
     def like_game(self, game_id):
         user = self.find()

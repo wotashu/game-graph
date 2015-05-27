@@ -60,6 +60,7 @@ def add_game():
     title = request.form['title']
     tags = request.form['tags']
     genre = request.form['genre']
+    platform = request.form['platform']
 
     if not title:
         abort(400, 'You must give your game a title.')
@@ -68,7 +69,7 @@ def add_game():
     if not genre:
         abort(400, 'You must give at least one genre')
 
-    user.add_game(title, tags, genre)
+    user.add_game(title, tags, genre, platform)
     return redirect(url_for('index'))
 
 
