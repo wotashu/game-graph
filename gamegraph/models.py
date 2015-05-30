@@ -3,12 +3,14 @@ from passlib.hash import bcrypt
 from datetime import datetime
 import os
 import uuid
+from wtforms import StringField, Form
+from wtforms.validators import DataRequired
 
 # uncomment for local neo4j database
-# url = os.environ.get('NEO4J_URL', 'http://localhost:7474')
+url = os.environ.get('NEO4J_URL', 'http://localhost:7474')
 
 # for use with graphenedb
-url = os.environ.get('GRAPHENEDB_URL', 'http://localhost:7474')
+# url = os.environ.get('NEO4J_URL', 'http://localhost:7474')
 
 username = os.environ.get('NEO4J_USERNAME')
 password = os.environ.get('NEO4J_PASSWORD')
@@ -47,6 +49,32 @@ class User:
         else:
             return False
 
+    def add_node(self, node_type, node_title, node_notes):
+        user = self.find()
+        type = node_type
+        title = node_title
+        notes = node_notes
+        new_node = Node(type,
+                        title=title,
+                        node_notes=notes,
+                        id=str(uuid.uuid4()),
+                        timestamp=timestamp(),
+                        date=date())
+        rel = Relationship(user, "ADDED", new_node,
+            time=timestamp(), date=date())
+        graph.create(rel)
+
+    def add_relationship(self, node, attribute_field, attribute, relationship):
+        user = self.find()
+        node = node
+        node = Node(
+            node,
+            str(uuid.uuid4()),
+            title = attribute,
+            date = date()
+        )
+        graph.create(node)
+
     def add_game(self, title, tags, genre, platform):
         user = self.find()
         game = Node(
@@ -81,14 +109,6 @@ class User:
             rel = Relationship(game, "HAS_PLATFORM", gen,
                                time=timestamp(), date=date())
             graph.create(rel)
-
-
-    def form(title, date):
-        chunk = Node(
-                title = title
-                date=date()
-                )
-
 
     def like_game(self, game_id):
         user = self.find()
@@ -201,4 +221,8 @@ def timestamp():
 
 
 def date():
-    return datetime.now().strftime("%H:%M:%S.%f")
+    return datetime.now().isoformat()
+
+
+class MyForm(Form):
+    name = StringField('name', validators=[DataRequired()])

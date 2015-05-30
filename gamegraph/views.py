@@ -1,4 +1,4 @@
-from models import User, get_todays_recent_games, get_users_recent_games, get_all_games, get_game
+from models import User, get_todays_recent_games, get_users_recent_games, get_all_games, get_game, MyForm
 from flask import Flask, request, session, redirect, url_for, abort, render_template, flash
 from flask_bootstrap import Bootstrap
 from werkzeug.contrib.fixers import ProxyFix
@@ -73,6 +73,31 @@ def add_game():
     return redirect(url_for('index'))
 
 
+@app.route('/add_node', methods=['GET', 'POST'])
+def add_node():
+    user = User(session['username'])
+    node_type = request.form['node_type']
+    node_title = request.form['node_title']
+    node_notes = request.form['node_notes']
+
+    if not node_type:
+        abort(400, 'You must give a node type')
+
+    elif not node_title:
+        abort(400, 'You must the node a title')
+
+    elif not node_notes:
+        abort(400, 'You must explain this node with notes')
+
+    user.add_node(node_type, node_title, node_notes)
+    flash("Node Added")
+    return redirect(url_for('new_node'))
+
+
+@app.route('/add')
+def new_node():
+    return render_template('new_node.html')
+
 @app.route('/all_games')
 def index2():
     games = get_all_games()
@@ -129,3 +154,12 @@ def logout():
     session.pop('username', None)
     flash('Logged out.')
     return redirect(url_for('index'))
+
+
+@app.route('/submit', methods=('GET', 'POST'))
+def submit():
+    form = MyForm()
+    if form.validate_on_submit():
+        return redirect('/success')
+    return render_template('submit.html', form=form)
+
