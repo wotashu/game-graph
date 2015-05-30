@@ -1,11 +1,11 @@
 #!/bin/bash
 
 NAME="gamegraph"
-FLASKDIR=/home/ubuntu/gitprojects/Gamer-Flask
-VENVDIR=/home/ubuntu/gitprojects/Gamer-Flask/venv
-SOCKFILE=/home/ubuntu/gitprojects/Gamer-Flask/sock
+FLASKDIR=/srv/www/game-graph
+VENVDIR=/srv/www/game-graph/env
+SOCKFILE=/srv/www/game-graph/sock
 USER=ubuntu
-GROUP=ubuntu
+GROUP=www-data
 NUM_WORKERS=3
 
 echo "Starting $NAME"
@@ -21,7 +21,7 @@ RUNDIR=$(dirname $SOCKFILE)
 test -d $RUNDIR || mkdir -p $RUNDIR
 
 # Start your unicorn
-exec gunicorn gamer4j:app -b 127.0.0.1:8000 \
+exec gunicorn gamegraph:app -b 127.0.0.1:8000 \
   --name $NAME \
   --workers $NUM_WORKERS \
   --user=$USER --group=$GROUP \
