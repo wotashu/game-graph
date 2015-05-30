@@ -1,4 +1,4 @@
-from gamer4j import app
+from gamegraph import app
 import os
 
 app.secret_key = os.urandom(24)
