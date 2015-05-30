@@ -98,6 +98,7 @@ def add_node():
 def new_node():
     return render_template('new_node.html')
 
+
 @app.route('/all_games')
 def index2():
     games = get_all_games()
