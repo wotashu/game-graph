@@ -70,6 +70,7 @@ def add_game():
         abort(400, 'You must give at least one genre')
 
     user.add_game(title, tags, genre, platform)
+    flash("Game Added")
     return redirect(url_for('index'))
 
 
