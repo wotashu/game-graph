@@ -210,6 +210,7 @@ def get_all_games():
 
 def get_game(game_title):
     games = graph.find_one("Game", "title", game_title)
+    # rel = list(graph.match(start_node=games))
     return games
 
 
