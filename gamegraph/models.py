@@ -1,5 +1,5 @@
 from py2neo import Graph, Node, Relationship, authenticate
-import bcrypt
+from passlib.hash import bcrypt
 from datetime import datetime
 import os
 import uuid
