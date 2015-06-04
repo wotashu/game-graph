@@ -96,11 +96,11 @@ def add_node():
     return redirect(url_for('new_node'))
 
 
-@app.route('/add')
+@app.route('/add_node')
 def new_node():
     return render_template('new_node.html')
 
-@app.route('/new_game')
+@app.route('/add_game')
 def new_game():
     return render_template('new_game.html')
 
