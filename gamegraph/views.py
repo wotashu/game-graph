@@ -59,19 +59,19 @@ def add_game():
     user = User(session['username'])
     title = request.form['title']
     genre = request.form['genre']
-    mood = request.form['mood']
+    moods = request.form['mood']
     tropes = request.form['tropes']
-    theme = request.form['theme']
+    themes = request.form['theme']
 
     if not title:
         abort(400, 'You must give your game a title.')
     if not genre:
         abort(400, 'You must give at least one genre')
 
-    user.add_game(title, genre, mood, tropes, theme)
+    user.add_game(title, genre, moods, tropes, themes)
     flash(title + " Added with relationships to " +
-          + genre + " " + mood +
-          " " + tropes + " " + theme)
+          + genre + " " + moods +
+          " " + tropes + " " + themes)
     return redirect(url_for('new_game'))
 
 
