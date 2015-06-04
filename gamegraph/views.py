@@ -1,4 +1,4 @@
-from models import User, get_todays_recent_games, get_users_recent_games, get_all_games, get_game, MyForm
+from models import User, get_todays_recent_games, get_users_recent_games, get_all_games, get_game
 from flask import Flask, request, session, redirect, url_for, abort, render_template, flash
 from flask_bootstrap import Bootstrap
 from werkzeug.contrib.fixers import ProxyFix
@@ -70,6 +70,7 @@ def add_game():
         abort(400, 'You must give at least one genre')
 
     user.add_game(title, tags, genre, platform)
+    flash(title + " Added with relationships to " + tags + " " + genre + " " + platform)
     return redirect(url_for('index'))
 
 
@@ -97,6 +98,7 @@ def add_node():
 @app.route('/add')
 def new_node():
     return render_template('new_node.html')
+
 
 @app.route('/all_games')
 def index2():
@@ -155,11 +157,4 @@ def logout():
     flash('Logged out.')
     return redirect(url_for('index'))
 
-
-@app.route('/submit', methods=('GET', 'POST'))
-def submit():
-    form = MyForm()
-    if form.validate_on_submit():
-        return redirect('/success')
-    return render_template('submit.html', form=form)
 

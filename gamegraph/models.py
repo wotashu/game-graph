@@ -10,7 +10,7 @@ from wtforms.validators import DataRequired
 url = os.environ.get('NEO4J_URL', 'http://localhost:7474')
 
 # for use with graphenedb
-# url = os.environ.get('NEO4J_URL', 'http://localhost:7474')
+# url = os.environ.nhget('NEO4J_URL', 'http://localhost:7474')
 
 username = os.environ.get('NEO4J_USERNAME')
 password = os.environ.get('NEO4J_PASSWORD')
@@ -207,6 +207,7 @@ def get_all_games():
 
 def get_game(game_title):
     games = graph.find_one("Game", "title", game_title)
+    # rel = list(graph.match(start_node=games))
     return games
 
 
