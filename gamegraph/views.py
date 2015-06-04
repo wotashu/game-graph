@@ -59,9 +59,9 @@ def add_game():
     user = User(session['username'])
     title = request.form['title']
     genre = request.form['genre']
-    moods = request.form['mood']
+    moods = request.form['moods']
     tropes = request.form['tropes']
-    themes = request.form['theme']
+    themes = request.form['themes']
 
     if not title:
         abort(400, 'You must give your game a title.')
