@@ -86,7 +86,7 @@ def add_node():
         abort(400, 'You must give a node type')
 
     elif not node_title:
-        abort(400, 'You must the node a title')
+        abort(400, 'You must give the node a title')
 
     elif not node_notes:
         abort(400, 'You must explain this node with notes')
