@@ -21,8 +21,8 @@
           </button>
             <a class="navbar-brand" href="{{ url_for('index') }}">Game Graph</a>
             <a class="navbar-brand" href="/all_games">All Games</a>
-            <a class="navbar-brand" href="/add_game">Add a new game</a>
-            <a class="navbar-brand" href="/add_node">Add a node</a>
+            <a class="navbar-brand" href="/new_game">Add a new game</a>
+            <a class="navbar-brand" href="/new_node">Add a node</a>
             {% if not session.username %}
                 <a class="navbar-brand" href="{{ url_for('register') }}">Register</a>
                 <a class="navbar-brand" href="{{ url_for('login') }}">Login</a>
