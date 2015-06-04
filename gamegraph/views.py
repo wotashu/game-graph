@@ -54,7 +54,7 @@ def login():
     return render_template('login.html', error=error)
 
 
-@app.route('/add_game', methods=['POST'])
+@app.route('/add_game', methods=['GET', 'POST'])
 def add_game():
     user = User(session['username'])
     title = request.form['title']
@@ -75,7 +75,7 @@ def add_game():
     flash(title + " Added with relationships to " +
           tags + " " + genre + " " + mood +
           " " + tropes + " " + theme)
-    return redirect(url_for('index'))
+    return redirect(url_for('new_game'))
 
 
 @app.route('/add_node', methods=['GET', 'POST'])
