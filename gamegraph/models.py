@@ -103,10 +103,24 @@ class User:
                                time=timestamp(), date=date())
             graph.create(rel)
 
-        platform = [x.strip() for x in platform.lower().split(',')]
-        for g in genre:
-            gen = graph.merge_one("Platform", "name", g)
-            rel = Relationship(game, "HAS_PLATFORM", gen,
+        mood = [x.strip() for x in platform.lower().split(',')]
+        for m in mood:
+            moo = graph.merge_one("Platform", "name", m)
+            rel = Relationship(game, "HAS_PLATFORM", moo,
+                               time=timestamp(), date=date())
+            graph.create(rel)
+
+        tropes = [x.strip() for x in platform.lower().split(',')]
+        for t in tropes:
+            tro = graph.merge_one("Platform", "name", t)
+            rel = Relationship(game, "HAS_PLATFORM", tro,
+                               time=timestamp(), date=date())
+            graph.create(rel)
+
+        theme = [x.strip() for x in platform.lower().split(',')]
+        for t in theme:
+            the = graph.merge_one("Platform", "name", t)
+            rel = Relationship(game, "HAS_PLATFORM", the,
                                time=timestamp(), date=date())
             graph.create(rel)
 
