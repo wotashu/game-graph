@@ -89,13 +89,6 @@ class User:
             time=timestamp(), date=date())
         graph.create(rel)
 
-        tags = [x.strip() for x in tags.lower().split(',')]
-        for t in tags:
-            tag = graph.merge_one("Tag", "name", t)
-            rel = Relationship(tag, "TAGGED", game,
-                time=timestamp(), date=date())
-            graph.create(rel)
-
         genre = [x.strip() for x in genre.lower().split(',')]
         for g in genre:
             gen = graph.merge_one("Genre", "name", g)
