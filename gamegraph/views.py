@@ -100,7 +100,7 @@ def add_node():
 def new_node():
     return render_template('new_node.html')
 
-@app.route('/add_new_game')
+@app.route('/add_game')
 def new_game():
     return render_template('new_game.html')
 
