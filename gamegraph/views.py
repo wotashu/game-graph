@@ -69,8 +69,7 @@ def add_game():
         abort(400, 'You must give at least one genre')
 
     user.add_game(title, genre, moods, tropes, themes)
-    flash(title + " Added with relationships to " +
-          + genre + " " + moods +
+    flash(title + " Added with relationships to " + genre + " " + moods +
           " " + tropes + " " + themes)
     return redirect(url_for('index'))
 
