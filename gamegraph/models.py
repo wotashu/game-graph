@@ -75,7 +75,7 @@ class User:
         )
         graph.create(node)
 
-    def add_game(self, title, tags, genre, platform):
+    def add_game(self, title, genre, moods, tropes, themes):
         user = self.find()
         game = Node(
             "Game",
@@ -96,22 +96,22 @@ class User:
                                time=timestamp(), date=date())
             graph.create(rel)
 
-        mood = [x.strip() for x in platform.lower().split(',')]
-        for m in mood:
+        moods = [x.strip() for x in moods.lower().split(',')]
+        for m in moods:
             moo = graph.merge_one("Platform", "name", m)
             rel = Relationship(game, "HAS_PLATFORM", moo,
                                time=timestamp(), date=date())
             graph.create(rel)
 
-        tropes = [x.strip() for x in platform.lower().split(',')]
+        tropes = [x.strip() for x in tropes.lower().split(',')]
         for t in tropes:
             tro = graph.merge_one("Platform", "name", t)
             rel = Relationship(game, "HAS_PLATFORM", tro,
                                time=timestamp(), date=date())
             graph.create(rel)
 
-        theme = [x.strip() for x in platform.lower().split(',')]
-        for t in theme:
+        themes = [x.strip() for x in themes.lower().split(',')]
+        for t in themes:
             the = graph.merge_one("Platform", "name", t)
             rel = Relationship(game, "HAS_PLATFORM", the,
                                time=timestamp(), date=date())
