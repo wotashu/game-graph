@@ -133,8 +133,6 @@ class User:
         return similar
 
     def get_commonality_of_user(self, username):
-        # Find how many of the logged-in user's posts the other user
-        # has liked and which tags they've both blogged about.
         query = """
         MATCH (they:User {username:{they}}),
               (you:User {username:{you}})
@@ -188,7 +186,6 @@ def get_todays_recent_games():
     LIMIT 5
     """
 
-    # games = graph.cypher.execute(query, today = date())
     games = graph.cypher.execute(query, today=date())
     return games
 
