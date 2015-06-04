@@ -72,7 +72,7 @@ def add_game():
     flash(title + " Added with relationships to " +
           + genre + " " + moods +
           " " + tropes + " " + themes)
-    return redirect(url_for('new_game'))
+    return redirect(url_for('index'))
 
 
 @app.route('/add_node', methods=['GET', 'POST'])
