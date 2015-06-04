@@ -103,6 +103,9 @@ def add_node():
 def new_node():
     return render_template('new_node.html')
 
+@app.route('/add_new_game')
+def new_node():
+    return render_template('add_game.html')
 
 @app.route('/all_games')
 def index2():
