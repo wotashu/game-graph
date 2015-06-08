@@ -1,4 +1,4 @@
-from py2neo import Graph, Node, Relationship, authenticate
+from py2neo import Graph, Node, Relationship, authenticate, Path, Rev
 from passlib.hash import bcrypt
 from datetime import datetime
 import os
@@ -75,7 +75,7 @@ class User:
         )
         graph.create(node)
 
-    def add_game(self, title, genre, moods, tropes, themes):
+    def add_game(self, title, genre, moods, tropes, themes, edition, year, platform):
         user = self.find()
         game = Node(
             "Game",
@@ -98,24 +98,32 @@ class User:
 
         moods = [x.strip() for x in moods.lower().split(',')]
         for m in moods:
-            moo = graph.merge_one("Platform", "name", m)
-            rel = Relationship(game, "HAS_PLATFORM", moo,
+            moo = graph.merge_one("Mood", "name", m)
+            rel = Relationship(game, "HAS_MOOD", moo,
                                time=timestamp(), date=date())
             graph.create(rel)
 
         tropes = [x.strip() for x in tropes.lower().split(',')]
         for t in tropes:
-            tro = graph.merge_one("Platform", "name", t)
-            rel = Relationship(game, "HAS_PLATFORM", tro,
+            tro = graph.merge_one("Trope", "name", t)
+            rel = Relationship(game, "HAS_TROPE", tro,
                                time=timestamp(), date=date())
             graph.create(rel)
 
         themes = [x.strip() for x in themes.lower().split(',')]
         for t in themes:
-            the = graph.merge_one("Platform", "name", t)
-            rel = Relationship(game, "HAS_PLATFORM", the,
+            the = graph.merge_one("Theme", "name", t)
+            rel = Relationship(game, "HAS_THEME", the,
                                time=timestamp(), date=date())
             graph.create(rel)
+
+        editions = graph.merge_one("Edition", "title", edition)
+        year = graph.merge_one("Year", "year", year)
+        platform = graph.merge_one("Platform", "name", platform)
+        gey = Path(game, "HAS_EDITION", editions, "RELEASED", year )
+        gep = Relationship(editions, "HAS_PLATFORM", platform)
+        graph.create(gey, gep)
+
 
     def like_game(self, game_id):
         user = self.find()
@@ -123,8 +131,6 @@ class User:
         graph.create_unique(Relationship(user, "LIKED", game))
 
     def get_similar_users(self):
-        # Find three users who are most similar to the logged-in user
-        # based on tags they've both tagged.
         query = """
         MATCH (you:User)-[:CATALOGED]->(:Game)<-[:TAGGED]-(tag:Tag),
               (they:User)-[:CATALOGED]->(:Game)<-[:TAGGED]-(tag)

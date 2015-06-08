@@ -62,6 +62,10 @@ def add_game():
     moods = request.form['moods']
     tropes = request.form['tropes']
     themes = request.form['themes']
+    edition = request.form['edition']
+    year = request.form['year']
+    platform = request.form['platform']
+
 
     if not user:
         abort(400, 'You must be logged in to add a game')
@@ -70,10 +74,16 @@ def add_game():
         abort(400, 'You must give your game a title.')
     if not genre:
         abort(400, 'You must give at least one genre')
+    if not edition:
+        abort(400, 'You must give at least one edition')
+    if not year:
+        abort(400, 'You must give an edition a year')
+    if not platform:
+        abort(400, 'You must add a platform for the edition')
 
-    user.add_game(title, genre, moods, tropes, themes)
+    user.add_game(title, genre, moods, tropes, themes, edition, year, platform)
     flash(title + " Added with relationships to " + genre + " " + moods +
-          " " + tropes + " " + themes)
+          " " + tropes + " " + themes + " " + edition + " " + year + " " + platform)
     return redirect(url_for('index'))
 
 
