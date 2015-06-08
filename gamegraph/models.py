@@ -213,8 +213,20 @@ def get_all_games():
 
 
 def get_game(game_title):
-    games = graph.find_one("Game", "title", game_title)
+    # games = graph.find_one("Game", "title", game_title)
     # rel = list(graph.match(start_node=games))
+    query = """
+    MATCH (game:Game {title:{game_title}})-[r]->(genre:Genre),
+        (game)-[s]->(edition:Edition),
+        (edition)-[t]->(year:Year),
+        (edition)-[u]->(platform:Platform)
+    RETURN game.title AS title,
+        genre.name AS genre,
+        COLLECT(edition.title) AS editions,
+        year.year AS year,
+        platform.name AS platform
+    """
+    games = graph.cypher.execute(query, game_title=game_title)
     return games
 
 

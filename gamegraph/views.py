@@ -63,6 +63,9 @@ def add_game():
     tropes = request.form['tropes']
     themes = request.form['themes']
 
+    if not user:
+        abort(400, 'You must be logged in to add a game')
+
     if not title:
         abort(400, 'You must give your game a title.')
     if not genre:
@@ -81,7 +84,10 @@ def add_node():
     node_title = request.form['node_title']
     node_notes = request.form['node_notes']
 
-    if not node_type:
+    if not user:
+        abort(400, 'You must be logged in to add a node')
+
+    elif not node_type:
         abort(400, 'You must give a node type')
 
     elif not node_title:

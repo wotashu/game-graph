@@ -1,11 +1,14 @@
 {% extends "layout.html" %}
 {% block body %}
+    <div class="container">
+        <h1> {{ games[0].title }}</h1>
+        <h2> Genre: {{ games[0].genre }}</h2>
+            {% for game in games %}
+                    {%  for edition in game.editions %}
+                        <h2>Edition Title: {{ edition }}</h2>
 
-
-<h2>{{ games.title }}'s page</h2>
-<p>{{ games }}</p>
-<ul>
-	<li>Genre: {{ games.genres }}</li>
-	<li>Platform: {{ games.platform }}</li>
-</ul>
+                        Published in {{ game.year }} on platform {{ game.platform }}
+                    {% endfor %}
+            {% endfor %}
+    </div>
 {% endblock %}
