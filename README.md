@@ -1,5 +1,5 @@
 # Gamer-Flask
-Neo4j Flask App for Gamer Group
+Neo4j Flask App for the Seattle Interactive Media Museum and Gamer Group
 
 Borrows heavily from the neo4j-flask application https://github.com/nicolewhite/neo4j-flask
 ---
