@@ -1,7 +1,10 @@
 # Gamer-Flask
 Neo4j Flask App for Gamer Group
 
-On ubuntu
+Borrows heavily from the neo4j-flask application https://github.com/nicolewhite/neo4j-flask
+---
+# Getting Started
+On ubuntu:
 ```
 sudo su
 apt-get install python python-dev libffi-dev python-pip python-virtualenv
@@ -12,10 +15,12 @@ source env/bin/activate
 pip install -r requirements.txt
 python run.py
 ```
+This creates a development server running on port 5000
+---
 Using gunicorn:
 ```
 pip install gunicorn
 gunicorn gamer4j:app
 ```
 
-Opens on port 5000
+This installation of gunicorn seems to work best with Apache2 and mod_wsgi. Should theoretically work with Nginx with correct configuration.
