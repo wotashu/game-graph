@@ -22,3 +22,11 @@ WITH A, COLLECT(r) as oldRels, B, SUM(r.weight) as W
 FOREACH(r IN oldRels | DELETE r)
 WITH A, W, B
 CREATE A-[O:HAS_GENRE {weight:W}]->B;
+
+
+//test
+MATCH A-[r]->B
+WITH A, COLLECT(r) as oldRels, B, SUM(r.weight) as W
+FOREACH(r IN oldRels | DELETE r)
+WITH A, W, B
+CREATE A-[O:HAS {weight:W}]->B;
