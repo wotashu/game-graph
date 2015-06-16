@@ -6,21 +6,32 @@
         <form action="{{ url_for('add_game') }}" method=post>
             <dl>
                 <dt>Title:</dt>
-                <dd><input type=text size=30 name=title></dd>
-                <dt>Genres (separated by commas):</dt>
-                <dd><input type=text size=30 name=genre></dd>
+                <dd><input type=text class="form-control" name=title></dd>
+                <dt>Genres:</dt>
+                <dd>
+                    <select class="form-control" name=genre>
+                        {% for c in cv %}
+                            <option value="{{ c.genre }}">{{ c.genre }}</option>
+                        {% endfor %}
+                    </select>
+                </dd>
                 <dt>Moods (separated by commas):</dt>
-                <dd><input type=text size=30 name=moods></dd>
+                <dd><input type=text class="form-control" name=moods></dd>
                 <dt>Tropes (separated by commas):</dt>
-                <dd><input type=text size=30 name=tropes></dd>
+                <dd>
+                    <select name=tropes class="form-control">
+                        <option value="Bunny">Bunny</option>
+                        <option value="GameBro">GameBro</option>
+                    </select>
+                </dd>
                 <dt>Themes (separated by commas):</dt>
-                <dd><input type=text size=30 name=themes></dd>
+                <dd><input type=text class="form-control" name=themes></dd>
                 <dt>Edition:</dt>
-                <dd><input type=text size=30 name=edition></dd>
+                <dd><input type=text class="form-control" name=edition></dd>
                 <dt>Year:</dt>
-                <dd><input type=text size=30 name=year></dd>
+                <dd><input type=text class="form-control" name=year></dd>
                 <dt>Platform:</dt>
-                <dd><input type=text size=30 name=platform></dd>
+                <dd><input type=text class="form-control" name=platform></dd>
             </dl>
             <input type=submit value="Add">
         </form>

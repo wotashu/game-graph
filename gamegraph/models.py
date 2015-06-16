@@ -91,38 +91,40 @@ class User:
 
         genre = [x.strip() for x in genre.lower().split(',')]
         for g in genre:
-            gen = graph.merge_one("Genre", "name", g)
+            gen = graph.merge_one("Genre", "title", g)
             rel = Relationship(game, "HAS_GENRE", gen,
                                time=timestamp(), date=date())
             graph.create(rel)
 
         moods = [x.strip() for x in moods.lower().split(',')]
         for m in moods:
-            moo = graph.merge_one("Mood", "name", m)
+            moo = graph.merge_one("Mood", "title", m)
             rel = Relationship(game, "HAS_MOOD", moo,
                                time=timestamp(), date=date())
             graph.create(rel)
 
         tropes = [x.strip() for x in tropes.lower().split(',')]
         for t in tropes:
-            tro = graph.merge_one("Trope", "name", t)
+            tro = graph.merge_one("Trope", "title", t)
             rel = Relationship(game, "HAS_TROPE", tro,
                                time=timestamp(), date=date())
             graph.create(rel)
 
         themes = [x.strip() for x in themes.lower().split(',')]
         for t in themes:
-            the = graph.merge_one("Theme", "name", t)
+            the = graph.merge_one("Theme", "title", t)
             rel = Relationship(game, "HAS_THEME", the,
                                time=timestamp(), date=date())
             graph.create(rel)
 
         editions = graph.merge_one("Edition", "title", edition)
         year = graph.merge_one("Year", "year", year)
-        platform = graph.merge_one("Platform", "name", platform)
+        platform = graph.merge_one("Platform", "title", platform)
         gey = Path(game, "HAS_EDITION", editions, "RELEASED", year )
         gep = Relationship(editions, "HAS_PLATFORM", platform)
         graph.create(gey, gep)
+
+
 
 
     def like_game(self, game_id):
@@ -136,7 +138,7 @@ class User:
               (they:User)-[:CATALOGED]->(:Game)<-[:TAGGED]-(tag)
         WHERE you.username = {username} AND you <> they
         WITH they,
-             COLLECT(DISTINCT tag.name) AS tags,
+             COLLECT(DISTINCT tag.title) AS tags,
              COUNT(DISTINCT tag) AS len
         ORDER BY len DESC LIMIT 3
         RETURN they.username AS similar_user, tags
@@ -153,7 +155,7 @@ class User:
         OPTIONAL MATCH (they)-[:CATALOGED]->(:Game)<-[:TAGGED]-(tag:Tag),
                        (you)-[:CATALOGED]->(:Game)<-[:TAGGED]-(tag)
         RETURN COUNT(DISTINCT game) AS likes,
-               COLLECT(DISTINCT tag.name) AS tags
+               COLLECT(DISTINCT tag.title) AS tags
         """
 
         result = graph.cypher.execute(query,
@@ -175,7 +177,7 @@ def get_users_recent_games(username):
            game.date AS date,
            game.timestamp AS timestamp,
            game.title AS title,
-           COLLECT(tag.name) AS tags
+           COLLECT(tag.title) AS tags
     ORDER BY timestamp DESC
     LIMIT 5
     """
@@ -194,7 +196,7 @@ def get_todays_recent_games():
            game.date AS date,
            game.timestamp AS timestamp,
            game.title AS title,
-           COLLECT(tag.name) AS tags
+           COLLECT(tag.title) AS tags
     ORDER BY timestamp DESC
     LIMIT 5
     """
@@ -210,7 +212,7 @@ def get_all_games():
         game.date AS date,
         game.timestamp AS timestamp,
         game.title AS title,
-        genre.name AS genre
+        genre.title AS genre
     ORDER BY title ASC
     """
 
@@ -227,10 +229,10 @@ def get_game(game_title):
         (edition)-[t]->(year:Year),
         (edition)-[u]->(platform:Platform)
     RETURN game.title AS title,
-        genre.name AS genre,
+        genre.title AS genre,
         COLLECT(edition.title) AS editions,
         year.year AS year,
-        platform.name AS platform
+        platform.title AS platform
     """
     games = graph.cypher.execute(query, game_title=game_title)
     return games
@@ -248,4 +250,15 @@ def date():
 
 
 class MyForm(Form):
-    name = StringField('name', validators=[DataRequired()])
+    title = StringField('title', validators=[DataRequired()])
+
+
+def get_genres():
+    query = """
+    MATCH (genre:Genre)
+    RETURN genre.title AS genre
+    ORDER BY genre ASC
+    """
+
+    cv_genre = graph.cypher.execute(query)
+    return cv_genre

@@ -9,23 +9,23 @@
       </div>
     </div>
     <div class="container">
-        <h3>Add New Game</h3>
-        <form action="{{ url_for('add_game') }}" method=post>
-            <dl>
-                <dt>Title:</dt>
-                <dd><input type=text size=30 name=title></dd>
-                <dt>Genres (separated by commas):</dt>
-                <dd><input type=text size=30 name=genre></dd>
-                <dt>Mood (separated by commas):</dt>
-                <dd><input type=text size=30 name=moods></dd>
-                <dt>Tropes (separated by commas):</dt>
-                <dd><input type=text size=30 name=tropes></dd>
-                <dt>Theme (separated by commas):</dt>
-                <dd><input type=text size=30 name=themes></dd>
-            </dl>
-            <input type=submit value="Add">
-        </form>
+
+    <h2>This the the Game Graph Video Game Metadata Database</h2>
+            {% if not session.username %}
+                <p>
+                    To get started, please <a href="{{ url_for('login') }}">Login</a>.
+                </p>
+                <p>
+                    If you do not have an account you should first <a href="{{ url_for('register') }}">register</a>.
+                </p>
+
+            {% else %}
+                <p>Thank you for logging in. Right now, you can add a new game or a new node.</p>
+            {% endif %}
+        <p>The backend uses neo4j, while the front end uses flask and py2neo.</p>
+        <p>Help us out by visiting our <a href="https://github.com/wotashu/game-graph">GitHub Repository</a></p>
+
     </div>
-<br>
+<br />
 
 {% endblock %}

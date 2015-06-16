@@ -1,4 +1,4 @@
-from models import User, get_todays_recent_games, get_users_recent_games, get_all_games, get_game
+from models import User, get_todays_recent_games, get_users_recent_games, get_all_games, get_game, get_genres
 from flask import Flask, request, session, redirect, url_for, abort, render_template, flash
 from flask_bootstrap import Bootstrap
 from werkzeug.contrib.fixers import ProxyFix
@@ -66,7 +66,6 @@ def add_game():
     year = request.form['year']
     platform = request.form['platform']
 
-
     if not user:
         abort(400, 'You must be logged in to add a game')
 
@@ -84,7 +83,8 @@ def add_game():
     user.add_game(title, genre, moods, tropes, themes, edition, year, platform)
     flash(title + " Added with relationships to " + genre + " " + moods +
           " " + tropes + " " + themes + " " + edition + " " + year + " " + platform)
-    return redirect(url_for('index'))
+
+    return redirect(url_for('new_game'))
 
 
 @app.route('/add_node', methods=['GET', 'POST'])
@@ -117,7 +117,8 @@ def new_node():
 
 @app.route('/new_game')
 def new_game():
-    return render_template('new_game.html')
+    cv = get_genres()
+    return render_template('new_game.html', cv=cv)
 
 @app.route('/all_games')
 def index2():
