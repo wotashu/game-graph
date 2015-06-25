@@ -1,0 +1,9 @@
+<ul class=games>
+    {% for node in nodes %}
+        <li>
+            <b><a href="node/{{ node.title }}">{{ node.title }}</a></b></a><br>
+        </li>
+    {% else %}
+        <li>There aren't any nodes yet!</li>
+    {% endfor %}
+</ul>

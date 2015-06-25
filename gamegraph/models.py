@@ -216,6 +216,19 @@ def get_all_games():
     games = graph.cypher.execute(query)
     return games
 
+def get_all_nodes():
+    query = """
+    MATCH (n)
+    RETURN n.id AS id,
+        n.date AS date,
+        n.timestamp AS timestamp,
+        n.title AS title
+    ORDER BY title ASC
+    """
+
+    nodes = graph.cypher.execute(query)
+    return nodes
+
 
 def get_game(game_title):
     # games = graph.find_one("Game", "title", game_title)
@@ -271,3 +284,14 @@ def get_one_genre(genre_title):
     """
     genres = graph.cypher.execute(query, genre_title=genre_title)
     return genres
+
+def get_one_node(node_title):
+    query = """
+    MATCH (n {title:{node_title}})
+    RETURN n.id AS id,
+        n.date AS date,
+        n.timestamp AS timestamp,
+        n.title AS node
+    """
+    nodes = graph.cypher.execute(query, node_title=node_title)
+    return nodes
