@@ -21,7 +21,7 @@
           </button>
             <a class="navbar-brand" href="{{ url_for('index') }}">Game Graph</a>
             <a class="navbar-brand" href="/all_games">All Games</a>
-
+            <a class="navbar-brand" href="/all_genres">All Genres</a>
             {% if not session.username %}
                 <a class="navbar-brand" href="{{ url_for('register') }}">Register</a>
                 <a class="navbar-brand" href="{{ url_for('login') }}">Login</a>
