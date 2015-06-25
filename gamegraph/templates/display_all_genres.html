@@ -1,0 +1,9 @@
+<ul class=games>
+    {% for genre in genres %}
+        <li>
+            <b><a href="genre/{{ genre.title }}">{{ genre.title }}</a></b></a><br>
+        </li>
+    {% else %}
+        <li>There aren't any genres yet!</li>
+    {% endfor %}
+</ul>

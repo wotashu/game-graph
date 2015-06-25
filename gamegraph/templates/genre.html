@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div class="container">
+        <h1> {{ genres[0].title }}</h1>
+            {% for genre in genres %}
+                        <h2>Game: <a href="/game/{{ genre.game }}">{{ genre.game }}</a></h2>
+            {% endfor %}
+    </div>
+{% endblock %}

@@ -1,4 +1,5 @@
-from models import User, get_todays_recent_games, get_users_recent_games, get_all_games, get_game, get_genres
+from models import User, get_todays_recent_games, get_users_recent_games, \
+    get_all_games, get_game, get_genres, get_one_genre
 from flask import Flask, request, session, redirect, url_for, abort, render_template, flash
 from flask_bootstrap import Bootstrap
 from werkzeug.contrib.fixers import ProxyFix
@@ -125,6 +126,10 @@ def index2():
     games = get_all_games()
     return render_template('all_games.html', games=games)
 
+@app.route('/all_genres')
+def all_genre():
+    genres = get_genres()
+    return render_template('all_genres.html', genres=genres)
 
 @app.route('/like_game/<game_id>', methods=['GET'])
 def like_game(game_id):
@@ -143,6 +148,10 @@ def game_profile(game_title):
     games = get_game(game_title)
     return render_template('game.html', games=games)
 
+@app.route('/genre/<genre_title>', methods=['GET'])
+def genre_profile(genre_title):
+    genres = get_one_genre(genre_title)
+    return render_template('genre.html', genres=genres)
 
 @app.route('/profile/<profile_username>', methods=['GET'])
 def profile(profile_username):

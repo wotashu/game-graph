@@ -124,9 +124,6 @@ class User:
         gep = Relationship(editions, "HAS_PLATFORM", platform)
         graph.create(gey, gep)
 
-
-
-
     def like_game(self, game_id):
         user = self.find()
         game = graph.find_one("Game", "id", game_id)
@@ -207,7 +204,7 @@ def get_todays_recent_games():
 
 def get_all_games():
     query = """
-    MATCH (game:Game)-[r]->(genre:Genre)
+    MATCH (game:Game)-[r]->(genre:GameGenre)
     RETURN game.id AS id,
         game.date AS date,
         game.timestamp AS timestamp,
@@ -224,7 +221,7 @@ def get_game(game_title):
     # games = graph.find_one("Game", "title", game_title)
     # rel = list(graph.match(start_node=games))
     query = """
-    MATCH (game:Game {title:{game_title}})-[r]->(genre:Genre),
+    MATCH (game:Game {title:{game_title}})-[r]->(genre:GameGenre),
         (game)-[s]->(edition:Edition),
         (edition)-[t]->(year:Year),
         (edition)-[u]->(platform:Platform)
@@ -255,10 +252,22 @@ class MyForm(Form):
 
 def get_genres():
     query = """
-    MATCH (genre:Genre)
-    RETURN genre.title AS genre
-    ORDER BY genre ASC
+    MATCH (genre:GameGenre)
+    RETURN genre.title AS title
+    ORDER BY title ASC
     """
 
     cv_genre = graph.cypher.execute(query)
     return cv_genre
+
+
+def get_one_genre(genre_title):
+    # games = graph.find_one("Game", "title", game_title)
+    # rel = list(graph.match(start_node=games))
+    query = """
+    MATCH (genre:GameGenre {title:{genre_title}})<-[r]-(game:Game)
+    RETURN game.title AS game,
+        genre.title AS title
+    """
+    genres = graph.cypher.execute(query, genre_title=genre_title)
+    return genres
