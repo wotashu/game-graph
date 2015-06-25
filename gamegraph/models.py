@@ -287,11 +287,13 @@ def get_one_genre(genre_title):
 
 def get_one_node(node_title):
     query = """
-    MATCH (n {title:{node_title}})
+    MATCH (n {title:{node_title}})-[r]-(m)
     RETURN n.id AS id,
         n.date AS date,
         n.timestamp AS timestamp,
-        n.title AS node
+        n.title AS node,
+        m.title AS friend,
+        r AS relationship
     """
     nodes = graph.cypher.execute(query, node_title=node_title)
     return nodes

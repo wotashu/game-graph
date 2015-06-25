@@ -2,5 +2,9 @@
 {% block body %}
     <div class="container">
         <h1> {{ nodes[0].node }}</h1>
+    {{ nodes }}
+        {% for node in nodes %}
+            <h2> {{ node.relationship }}: {{ node.friend }}</h2>
+        {% endfor %}
     </div>
 {% endblock %}
